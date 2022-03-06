@@ -1,0 +1,35 @@
+---
+    - hosts: test-server                                        
+      become: yes
+      tasks:
+
+       - name: Checking for old files        # Running the tests to check for Old tomcat installation
+         stat:
+           path: /opt/apache-tomcat-9.0.37/
+         register: file
+
+       - name: Removing the old files        # Deleting the old tomcat files
+         command: "{{ item }} "
+         with_items:
+         - rm -rf /opt/apache-tomcat-9.0.37/
+         args:
+            warn: no
+         when: file.stat.isdir is defined
+
+       - name: Extracting Tomcat             # Placing new files in the machine
+         unarchive:
+          src: /tmp/apache-tomcat-9.0.37.tar.gz
+          dest: /opt/
+   
+       - name: Configuring Tomcat            # Giving permissions to the tomcat installation and scripts
+         command: "{{ item }} "
+         with_items:
+         - chown -RH tomcat:tomcat /opt/apache-tomcat-9.0.37/
+         - chmod +x /opt/apache-tomcat-9.0.37/bin/startup.sh
+         args:
+            warn: no
+   
+       - name: Starting Tomcat               # Starting the tomcat service
+         command: nohup /opt/apache-tomcat-9.0.37/bin/startup.sh   
+         args:
+          warn: no

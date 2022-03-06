@@ -1,0 +1,30 @@
+application:
+  appId: GAZER-123
+  assetId: GAZER-123
+  sdlcType: EDM
+  appType: Webapp
+  webservice: false
+  restApi: true
+  microservice: false
+  projectLanguage: Java
+  frameworks: 
+   - Spring security
+   - Hibernate
+  platformVersion: Java 8
+  buildSystem: Maven
+  riskMatrixRevision: Rev1.0
+  sourceFilePattern: ".*\\+\\+\\+.*(\\.java|\\.jsp)+.*"
+  sensitivePackagePattern: ".*(\\+\\+\\+.*(org\\/hdivsamples\\/security)).*"
+  fileChangeThreshold: 20
+
+environment:
+  scm: GitLab
+  gitlabHostUrl: "https://gitlab.com/"
+  gitlabToken: "21Q3589E_WV5QKv-_Mwc"
+  scmOwner: "rahulgu"
+  scmRepositoryName: "java-mvn-hello-world-web-app"
+  scmBranchName: "master"
+  testDeploymentRoot: "Stargazer-IQ"
+  imChannelIdentifier: "#stargazer-notifications"
+  jiraProjectName: "Stargazer"
+  jiraIssuesQuery: "resolution = \"Unresolved\" AND labels in (Security, Defect)"
